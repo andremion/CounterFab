@@ -1,11 +1,21 @@
 [![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
 ![minSdkVersion 16](https://img.shields.io/badge/minSdkVersion-16-red.svg?style=true)
 ![compileSdkVersion 24](https://img.shields.io/badge/compileSdkVersion-24-yellow.svg?style=true)
+[ ![Download](https://api.bintray.com/packages/andremion/github/CounterFab/images/download.svg) ](https://bintray.com/andremion/github/CounterFab/_latestVersion)
 
 # CounterFab
 A FloatingActionButton subclass that shows a counter badge on right top corner
 
 ![Sample](https://raw.githubusercontent.com/andremion/CounterFab/master/art/sample.gif)
+
+## Usage
+
+```java
+CounterFab counterFab = (CounterFab) findViewById(R.id.counter_fab);
+counterFab.setCount(10); // Set the count value to show on badge
+counterFab.increase(); // Increase the current count value by 1
+counterFab.decrease(); // Decrease the current count value by 1
+```
 
 See more at the [sample](https://github.com/andremion/CounterFab/tree/master/sample)
 
