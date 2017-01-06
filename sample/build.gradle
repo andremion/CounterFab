@@ -21,7 +21,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':fab')
+    compile project(':counterfab')
     compile "com.android.support:design:$supportLibraryVersion"
 
     testCompile "junit:junit:$junitVersion"

@@ -6,10 +6,12 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.3'
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
     }
+}
+
+plugins {
+    id "com.jfrog.bintray" version "1.7.3"
 }
 
 allprojects {
@@ -31,6 +33,24 @@ allprojects {
         junitVersion = '4.12'
         espressoVersion = '2.2.+'
 
+        name = 'CounterFab'
+        description = 'A FloatingActionButton subclass that shows a counter badge on right top corner'
+
+        licenseName = 'The Apache Software License, Version 2.0'
+        licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        allLicenses = ["Apache-2.0"]
+
+        bintrayRepo = 'github'
+        group = 'com.github.andremion'
+        artifact = 'counterfab'
+
+        url = 'https://github.com/andremion/' + name
+        issueTracker = url + '/issues'
+        vcs = url + '.git'
+
+        developerId = 'andremion'
+        developerName = 'André Mion'
+        developerEmail = 'andremion@gmail.com'
     }
 }
 
