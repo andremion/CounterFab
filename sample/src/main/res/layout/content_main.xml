@@ -33,7 +33,6 @@
         android:id="@+id/counter_mode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:checkedButton="@+id/increase_button">
 
         <RadioButton
