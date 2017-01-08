@@ -31,6 +31,18 @@ or in your `pom.xml` if you are using Maven
 
 ## Usage
 
+Add it as a regular FloatingActionButton on layout…
+
+```xml
+<com.andremion.counterfab.CounterFab
+        android:id="@+id/counter_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add_white_24dp" />
+```
+
+and programmatically you can use one of these methods:
+
 ```java
 CounterFab counterFab = (CounterFab) findViewById(R.id.counter_fab);
 counterFab.setCount(10); // Set the count value to show on badge
