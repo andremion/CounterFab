@@ -1,12 +1,33 @@
 [![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
 ![minSdkVersion 16](https://img.shields.io/badge/minSdkVersion-16-red.svg?style=true)
 ![compileSdkVersion 24](https://img.shields.io/badge/compileSdkVersion-24-yellow.svg?style=true)
-[ ![Download](https://api.bintray.com/packages/andremion/github/CounterFab/images/download.svg) ](https://bintray.com/andremion/github/CounterFab/_latestVersion)
+[![Download](https://api.bintray.com/packages/andremion/github/CounterFab/images/download.svg)](https://bintray.com/andremion/github/CounterFab/_latestVersion)
 
 # CounterFab
 A FloatingActionButton subclass that shows a counter badge on right top corner
 
 ![Sample](https://raw.githubusercontent.com/andremion/CounterFab/master/art/sample.gif)
+
+## Installation
+
+Include the library in your `build.gradle`
+
+```groovy
+dependencies{
+    compile 'com.github.andremion:counterfab:1.0.0'
+}
+```
+
+or in your `pom.xml` if you are using Maven
+
+```xml
+<dependency>
+  <groupId>com.github.andremion</groupId>
+  <artifactId>counterfab</artifactId>
+  <version>1.0.0</version>
+  <type>aar</type>
+</dependency>
+```
 
 ## Usage
 
