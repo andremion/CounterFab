@@ -28,7 +28,7 @@ allprojects {
         versionCode = 1
         versionName = "1.0.0"
 
-        supportLibraryVersion = '25.1.+'
+        supportLibraryVersion = '25.1.0'
 
         junitVersion = '4.12'
         espressoVersion = '2.2.+'
