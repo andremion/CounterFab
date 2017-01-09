@@ -5,10 +5,13 @@
 
 [![Android Arsenal CounterFab](https://img.shields.io/badge/Android%20Arsenal-CounterFab-green.svg?style=true)](https://android-arsenal.com/details/1/5052)
 
+![Icon](https://raw.githubusercontent.com/andremion/CounterFab/master/sample/src/main/res/mipmap-hdpi/ic_launcher.png)
 # CounterFab
 A FloatingActionButton subclass that shows a counter badge on right top corner
 
 ![Sample](https://raw.githubusercontent.com/andremion/CounterFab/master/art/sample.gif)
+
+[![Get it on Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.andremion.counterfab.sample)
 
 ## Installation
 
