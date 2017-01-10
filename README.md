@@ -4,6 +4,7 @@
 [![Download](https://api.bintray.com/packages/andremion/github/CounterFab/images/download.svg)](https://bintray.com/andremion/github/CounterFab/_latestVersion)
 
 [![Android Arsenal CounterFab](https://img.shields.io/badge/Android%20Arsenal-CounterFab-green.svg?style=true)](https://android-arsenal.com/details/1/5052)
+[![MaterialUp Floating-Navigation-View](https://img.shields.io/badge/MaterialUp-CounterFab-blue.svg?style=true)](https://material.uplabs.com/posts/counterfab-library)
 
 ![Icon](https://raw.githubusercontent.com/andremion/CounterFab/master/sample/src/main/res/mipmap-hdpi/ic_launcher.png)
 # CounterFab
