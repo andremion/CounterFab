@@ -198,16 +198,12 @@ public class CounterFab extends FloatingActionButton {
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        getContentRect(mContentBounds);
-        mCircleBounds.offsetTo(mContentBounds.left + mContentBounds.width() - mCircleBounds.width(), mContentBounds.top);
-    }
-
-    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         if (mCount > 0 || isAnimating()) {
+            if (getContentRect(mContentBounds)) {
+                mCircleBounds.offsetTo(mContentBounds.left + mContentBounds.width() - mCircleBounds.width(), mContentBounds.top);
+            }
             float cx = mCircleBounds.centerX();
             float cy = mCircleBounds.centerY();
             float radius = mCircleBounds.width() / 2f * mAnimationFactor;
