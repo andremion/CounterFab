@@ -20,7 +20,7 @@ Include the library in your `build.gradle`
 
 ```groovy
 dependencies{
-    compile 'com.github.andremion:counterfab:1.0.0'
+    compile 'com.github.andremion:counterfab:1.0.1'
 }
 ```
 
@@ -30,7 +30,7 @@ or in your `pom.xml` if you are using Maven
 <dependency>
   <groupId>com.github.andremion</groupId>
   <artifactId>counterfab</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
