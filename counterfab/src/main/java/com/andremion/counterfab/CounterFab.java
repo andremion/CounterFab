@@ -243,7 +243,7 @@ public class CounterFab extends FloatingActionButton {
         @Override
         public void writeToParcel(Parcel out, int flags) {
             super.writeToParcel(out, flags);
-            out.writeValue(count);
+            out.writeInt(count);
         }
 
         @Override
