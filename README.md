@@ -14,6 +14,10 @@ A FloatingActionButton subclass that shows a counter badge on right top corner
 
 [![Get it on Google Play](https://developer.android.com/images/brand/en_generic_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.andremion.counterfab.sample)
 
+It's also used by [Louvre](https://github.com/andremion/Louvre) library.
+
+![Louvre](https://raw.githubusercontent.com/andremion/Louvre/master/art/sample.gif)
+
 ## Installation
 
 Include the library in your `build.gradle`
