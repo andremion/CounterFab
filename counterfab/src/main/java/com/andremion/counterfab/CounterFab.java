@@ -146,11 +146,24 @@ public class CounterFab extends FloatingActionButton {
         mTextPaint.setColor(color);
     }
 
-    private float getBadgeTextSize() {
+    public Typeface getBadgeTypeface() {
+        return mTextPaint.getTypeface();
+    }
+
+    @ColorInt public int getBadgeColor() {
+        return mCirclePaint.getColor();
+    }
+
+    @ColorInt public int getBadgeTextColor() {
+        return mTextPaint.getColor();
+    }
+
+
+    public float getBadgeTextSize() {
         return mTextSize;
     }
 
-    private void setBadgeTextSize(float size) {
+    public void setBadgeTextSize(float size) {
         mTextSize = size;
         mTextPaint.setTextSize(size);
     }
