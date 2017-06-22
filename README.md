@@ -60,6 +60,19 @@ counterFab.increase(); // Increase the current count value by 1
 counterFab.decrease(); // Decrease the current count value by 1
 ```
 
+## Customization
+
+The recommended way to customize the background color is by using the `app:backgroundTint` attribute
+
+```xml
+<com.andremion.counterfab.CounterFab
+        android:id="@+id/counter_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="#009688"
+        android:src="@drawable/ic_add_white_24dp" />
+```
+
 See more at the [sample](https://github.com/andremion/CounterFab/tree/master/sample)
 
 ## Libraries and tools used in the project
