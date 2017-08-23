@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -30,3 +31,4 @@ dependencies {
     })
 }
 
+apply from: 'https://raw.githubusercontent.com/andremion/JCenter/master/deploy.gradle'
