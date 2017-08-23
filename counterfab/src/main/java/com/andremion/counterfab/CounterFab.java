@@ -19,6 +19,7 @@ package com.andremion.counterfab;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -88,6 +89,12 @@ public class CounterFab extends FloatingActionButton {
 
     public CounterFab(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs,
+                R.styleable.CounterFab,
+                0,
+                0);
+
         setUseCompatPadding(true);
 
         final float density = getResources().getDisplayMetrics().density;
@@ -107,16 +114,21 @@ public class CounterFab extends FloatingActionButton {
 
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCirclePaint.setStyle(Paint.Style.FILL);
+
+        int defaultBadgeColor = mCirclePaint.getColor();
+
         ColorStateList colorStateList = getBackgroundTintList();
         if (colorStateList != null) {
-            mCirclePaint.setColor(colorStateList.getDefaultColor());
+            defaultBadgeColor = colorStateList.getDefaultColor();
         } else {
             Drawable background = getBackground();
             if (background instanceof ColorDrawable) {
                 ColorDrawable colorDrawable = (ColorDrawable) background;
-                mCirclePaint.setColor(colorDrawable.getColor());
+                defaultBadgeColor = colorDrawable.getColor();
             }
         }
+
+        mCirclePaint.setColor(ta.getColor(R.styleable.CounterFab_badgeBackgroundColor, defaultBadgeColor));
 
         mMaskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mMaskPaint.setStyle(Paint.Style.FILL);
