@@ -20,13 +20,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':counterfab')
-    compile "com.android.support:design:$supportLibraryVersion"
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':counterfab')
+    implementation "com.android.support:design:$supportLibraryVersion"
 
-    testCompile "junit:junit:$junitVersion"
+    testImplementation "junit:junit:$junitVersion"
 
-    androidTestCompile("com.android.support.test.espresso:espresso-core:$espressoVersion", {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
 }
