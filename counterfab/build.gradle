@@ -29,4 +29,4 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
 }
 
-apply from: 'https://raw.githubusercontent.com/andremion/JCenter/master/deploy.gradle'
+//apply from: 'https://raw.githubusercontent.com/andremion/JCenter/master/deploy.gradle'
