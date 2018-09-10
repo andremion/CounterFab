@@ -22,15 +22,14 @@ allprojects {
     }
     project.ext {
 
-        compileSdkVersion = 26
-        buildToolsVersion = '26.0.2'
+        compileSdkVersion = 27
         minSdkVersion = 16
-        targetSdkVersion = 26
+        targetSdkVersion = 27
 
         versionCode = 4
         versionName = "1.0.3"
 
-        supportLibraryVersion = '26.1.0'
+        supportLibraryVersion = '27.1.1'
 
         junitVersion = '4.12'
         espressoVersion = '2.2.+'
