@@ -44,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"
         app:layout_anchor="@id/toolbar"
-        app:badgeBackgroundColor="#03a9f4"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_add_white_24dp" />
 
