@@ -58,8 +58,12 @@ public class CounterFab extends FloatingActionButton {
                 }
             };
 
-    private static final int MAX_COUNT = 99;
-    private static final String MAX_COUNT_TEXT = "99+";
+    private static final int NORMAL_MAX_COUNT = 99;
+    private static final String NORMAL_MAX_COUNT_TEXT = "99+";
+
+    private static final int MINI_MAX_COUNT = 9;
+    private static final String MINI_MAX_COUNT_TEXT = "9+";
+
     private static final int TEXT_SIZE_DP = 11;
     private static final int TEXT_PADDING_DP = 2;
     private static final int MASK_COLOR = Color.parseColor("#33000000"); // Translucent black as mask color
@@ -135,15 +139,26 @@ public class CounterFab extends FloatingActionButton {
         mMaskPaint.setColor(MASK_COLOR);
 
         Rect textBounds = new Rect();
-        mTextPaint.getTextBounds(MAX_COUNT_TEXT, 0, MAX_COUNT_TEXT.length(), textBounds);
+        mTextPaint.getTextBounds(NORMAL_MAX_COUNT_TEXT, 0, NORMAL_MAX_COUNT_TEXT.length(), textBounds);
         mTextHeight = textBounds.height();
 
-        float textWidth = mTextPaint.measureText(MAX_COUNT_TEXT);
+        float textWidth = mTextPaint.measureText(NORMAL_MAX_COUNT_TEXT);
         float circleRadius = Math.max(textWidth, mTextHeight) / 2f + textPadding;
-        mCircleBounds = new Rect(0, 0, (int) (circleRadius * 2), (int) (circleRadius * 2));
+        int circleEnd = (int) (circleRadius * 2);
+        if (isSizeMini()) {
+            int circleStart = (int) (circleRadius / 2);
+            mCircleBounds = new Rect(circleStart, circleStart, circleEnd, circleEnd);
+        } else {
+            int circleStart = 0;
+            mCircleBounds = new Rect(circleStart, circleStart, (int) (circleRadius * 2), (int) (circleRadius * 2));
+        }
         mContentBounds = new Rect();
 
         onCountChanged();
+    }
+
+    private boolean isSizeMini() {
+        return super.getSize() == android.support.design.widget.FloatingActionButton.SIZE_MINI;
     }
 
     /**
@@ -182,10 +197,18 @@ public class CounterFab extends FloatingActionButton {
     }
 
     private void onCountChanged() {
-        if (mCount > MAX_COUNT) {
-            mText = String.valueOf(MAX_COUNT_TEXT);
+        if (isSizeMini()) {
+            if (mCount > MINI_MAX_COUNT) {
+                mText = String.valueOf(MINI_MAX_COUNT_TEXT);
+            } else {
+                mText = String.valueOf(mCount);
+            }
         } else {
-            mText = String.valueOf(mCount);
+            if (mCount > NORMAL_MAX_COUNT) {
+                mText = String.valueOf(NORMAL_MAX_COUNT_TEXT);
+            } else {
+                mText = String.valueOf(mCount);
+            }
         }
     }
 

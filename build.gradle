@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.1.4'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
     }
 }
@@ -22,15 +22,14 @@ allprojects {
     }
     project.ext {
 
-        compileSdkVersion = 26
-        buildToolsVersion = '26.0.2'
+        compileSdkVersion = 27
         minSdkVersion = 16
-        targetSdkVersion = 26
+        targetSdkVersion = 27
 
-        versionCode = 4
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.1.0"
 
-        supportLibraryVersion = '26.1.0'
+        supportLibraryVersion = '27.1.1'
 
         junitVersion = '4.12'
         espressoVersion = '2.2.+'

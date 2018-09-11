@@ -20,11 +20,11 @@ It's also used by [Louvre](https://github.com/andremion/Louvre) library.
 
 ## Installation
 
-Include the library in your `build.gradle`
+Include the library in your `build.gradle` _(check badge at top for latest version)_
 
 ```groovy
 dependencies{
-    compile 'com.github.andremion:counterfab:1.0.1'
+    compile 'com.github.andremion:counterfab:x.y.z'
 }
 ```
 
@@ -34,7 +34,7 @@ or in your `pom.xml` if you are using Maven
 <dependency>
   <groupId>com.github.andremion</groupId>
   <artifactId>counterfab</artifactId>
-  <version>1.0.1</version>
+  <version>x.y.z</version>
   <type>pom</type>
 </dependency>
 ```
@@ -70,6 +70,17 @@ The recommended way to customize the background color is by using the `app:backg
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:backgroundTint="#009688"
+        android:src="@drawable/ic_add_white_24dp" />
+```
+
+To change the badge background color you can use the `app:badgeBackgroundColor` attribute
+
+```xml
+<com.andremion.counterfab.CounterFab
+        android:id="@+id/counter_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:badgeBackgroundColor="#009688"
         android:src="@drawable/ic_add_white_24dp" />
 ```
 
