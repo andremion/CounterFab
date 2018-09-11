@@ -20,11 +20,11 @@ It's also used by [Louvre](https://github.com/andremion/Louvre) library.
 
 ## Installation
 
-Include the library in your `build.gradle`
+Include the library in your `build.gradle` _(check badge at top for latest version)_
 
 ```groovy
 dependencies{
-    compile 'com.github.andremion:counterfab:1.0.1'
+    compile 'com.github.andremion:counterfab:x.y.z'
 }
 ```
 
@@ -34,7 +34,7 @@ or in your `pom.xml` if you are using Maven
 <dependency>
   <groupId>com.github.andremion</groupId>
   <artifactId>counterfab</artifactId>
-  <version>1.0.1</version>
+  <version>x.y.z</version>
   <type>pom</type>
 </dependency>
 ```
