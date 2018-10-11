@@ -83,7 +83,7 @@ public class CounterFab extends FloatingActionButton {
     private float mTextHeight;
     private ObjectAnimator mAnimator;
 
-    private int badgePosition = 0;
+    private int badgePosition = RIGHT_TOP_POSITION;
     private static final int RIGHT_TOP_POSITION = 0;
     private static final int LEFT_BOTTOM_POSITION = 1;
     private static final int LEFT_TOP_POSITION = 2;
@@ -139,9 +139,7 @@ public class CounterFab extends FloatingActionButton {
         }
 
         mCirclePaint.setColor(ta.getColor(R.styleable.CounterFab_badgeBackgroundColor, defaultBadgeColor));
-        if (ta.hasValue(R.styleable.CounterFab_badgePosition)) {
-            badgePosition = ta.getInt(R.styleable.CounterFab_badgePosition, 0);
-        }
+        badgePosition = ta.getInt(R.styleable.CounterFab_badgePosition, RIGHT_TOP_POSITION);
 
         mMaskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mMaskPaint.setStyle(Paint.Style.FILL);
