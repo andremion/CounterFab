@@ -2,5 +2,10 @@
 <resources>
     <declare-styleable name="CounterFab">
         <attr name="badgeBackgroundColor" format="color" />
+        <attr name="Animation" format="enum">
+            <enum name="Bounce" value="0"/>
+            <enum name="Rotate" value="1"/>
+            <enum name="Disable" value="2"/>
+        </attr>
     </declare-styleable>
 </resources>

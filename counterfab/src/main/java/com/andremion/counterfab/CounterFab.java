@@ -35,8 +35,8 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Property;
 import android.view.View;
+import android.view.animation.BounceInterpolator;
 import android.view.animation.Interpolator;
-import android.view.animation.OvershootInterpolator;
 
 /**
  * A {@link FloatingActionButton} subclass that shows a counter badge on right top corner.
@@ -67,7 +67,11 @@ public class CounterFab extends FloatingActionButton {
     private static final int TEXT_SIZE_DP = 11;
     private static final int TEXT_PADDING_DP = 2;
     private static final int MASK_COLOR = Color.parseColor("#33000000"); // Translucent black as mask color
-    private static final Interpolator ANIMATION_INTERPOLATOR = new OvershootInterpolator();
+    private static final Interpolator ANIMATION_INTERPOLATOR = new BounceInterpolator();
+
+    private static final int BOUNCE_ANIMATION = 0;
+    private static final int ROTATE_ANIMATION = 1;
+    private static final int DISABLE_ANIMATION = 2;
 
     private final Rect mContentBounds;
     private final Paint mTextPaint;
@@ -82,6 +86,7 @@ public class CounterFab extends FloatingActionButton {
     private String mText;
     private float mTextHeight;
     private ObjectAnimator mAnimator;
+    private int mAnimationType;
 
     public CounterFab(Context context) {
         this(context, null, 0);
@@ -133,6 +138,9 @@ public class CounterFab extends FloatingActionButton {
         }
 
         mCirclePaint.setColor(ta.getColor(R.styleable.CounterFab_badgeBackgroundColor, defaultBadgeColor));
+        if (ta.hasValue(R.styleable.CounterFab_Animation)) {
+            mAnimationType = ta.getInt(R.styleable.CounterFab_Animation, 0);
+        }
 
         mMaskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mMaskPaint.setStyle(Paint.Style.FILL);
@@ -222,7 +230,19 @@ public class CounterFab extends FloatingActionButton {
         if (isAnimating()) {
             mAnimator.cancel();
         }
-        mAnimator = ObjectAnimator.ofObject(this, ANIMATION_PROPERTY, null, start, end);
+        switch (mAnimationType) {
+            case ROTATE_ANIMATION:
+                mAnimator = ObjectAnimator.ofFloat(this, "rotationY", 0f, 360f);
+                break;
+            case DISABLE_ANIMATION:
+                mAnimator = ObjectAnimator.ofFloat(this, "rotationY", 0f, 0f);
+                break;
+            case BOUNCE_ANIMATION:
+            default:
+                mAnimator = ObjectAnimator.ofObject(this, ANIMATION_PROPERTY, null, start, end);
+
+        }
+
         mAnimator.setInterpolator(ANIMATION_INTERPOLATOR);
         mAnimator.setDuration(mAnimationDuration);
         mAnimator.start();
