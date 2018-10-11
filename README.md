@@ -84,6 +84,17 @@ To change the badge background color you can use the `app:badgeBackgroundColor` 
         android:src="@drawable/ic_add_white_24dp" />
 ```
 
+To change the badge position you can use the `app:badgePosition` attribute as: RightTop, LeftBottom, LeftTop and RightBottom.
+
+```xml
+<com.andremion.counterfab.CounterFab
+        android:id="@+id/counter_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:badgePosition="RightTop"
+        android:src="@drawable/ic_add_white_24dp" />
+```
+
 See more at the [sample](https://github.com/andremion/CounterFab/tree/master/sample)
 
 ## Libraries and tools used in the project
