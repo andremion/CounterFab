@@ -83,6 +83,12 @@ public class CounterFab extends FloatingActionButton {
     private float mTextHeight;
     private ObjectAnimator mAnimator;
 
+    private int badgePosition = RIGHT_TOP_POSITION;
+    private static final int RIGHT_TOP_POSITION = 0;
+    private static final int LEFT_BOTTOM_POSITION = 1;
+    private static final int LEFT_TOP_POSITION = 2;
+    private static final int RIGHT_BOTTOM_POSITION = 3;
+
     public CounterFab(Context context) {
         this(context, null, 0);
     }
@@ -133,6 +139,7 @@ public class CounterFab extends FloatingActionButton {
         }
 
         mCirclePaint.setColor(ta.getColor(R.styleable.CounterFab_badgeBackgroundColor, defaultBadgeColor));
+        badgePosition = ta.getInt(R.styleable.CounterFab_badgePosition, RIGHT_TOP_POSITION);
 
         mMaskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mMaskPaint.setStyle(Paint.Style.FILL);
@@ -237,7 +244,27 @@ public class CounterFab extends FloatingActionButton {
         super.onDraw(canvas);
         if (mCount > 0 || isAnimating()) {
             if (getContentRect(mContentBounds)) {
-                mCircleBounds.offsetTo(mContentBounds.left + mContentBounds.width() - mCircleBounds.width(), mContentBounds.top);
+                int newLeft;
+                int newTop;
+                switch (badgePosition) {
+                    case LEFT_BOTTOM_POSITION:
+                        newLeft = mContentBounds.left;
+                        newTop = mContentBounds.bottom - mCircleBounds.height();
+                        break;
+                    case LEFT_TOP_POSITION:
+                        newLeft = mContentBounds.left;
+                        newTop = mContentBounds.top;
+                        break;
+                    case RIGHT_BOTTOM_POSITION:
+                        newLeft = mContentBounds.left + mContentBounds.width() - mCircleBounds.width();
+                        newTop = mContentBounds.bottom - mCircleBounds.height();
+                        break;
+                    case RIGHT_TOP_POSITION:
+                    default:
+                        newLeft = mContentBounds.left + mContentBounds.width() - mCircleBounds.width();
+                        newTop = mContentBounds.top;
+                }
+                mCircleBounds.offsetTo(newLeft, newTop);
             }
             float cx = mCircleBounds.centerX();
             float cy = mCircleBounds.centerY();
