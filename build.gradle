@@ -27,7 +27,7 @@ allprojects {
         targetSdkVersion = 27
 
         versionCode = 5
-        versionName = "1.1.0"
+        versionName = "1.1.1"
 
         supportLibraryVersion = '27.1.1'
 
