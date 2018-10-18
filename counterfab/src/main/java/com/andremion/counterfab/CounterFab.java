@@ -17,6 +17,7 @@
 package com.andremion.counterfab;
 
 import android.animation.ObjectAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -27,6 +28,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.IntRange;
@@ -295,6 +297,19 @@ public class CounterFab extends FloatingActionButton {
          */
         private SavedState(Parcel in) {
             super(in);
+            readState(in);
+        }
+
+        /**
+         * Constructor called from {@link #CREATOR}
+         */
+        @TargetApi(VERSION_CODES.N)
+        private SavedState(Parcel in, ClassLoader loader) {
+            super(in, loader);
+            readState(in);
+        }
+
+        private void readState(Parcel in) {
             count = in.readInt();
         }
 
@@ -311,12 +326,19 @@ public class CounterFab extends FloatingActionButton {
                     + " count=" + count + "}";
         }
 
-        public static final Creator<SavedState> CREATOR
-                = new Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR = new ClassLoaderCreator<SavedState>() {
+
+            @Override
+            public SavedState createFromParcel(Parcel in, ClassLoader loader) {
+                return new SavedState(in, loader);
+            }
+
+            @Override
             public SavedState createFromParcel(Parcel in) {
                 return new SavedState(in);
             }
 
+            @Override
             public SavedState[] newArray(int size) {
                 return new SavedState[size];
             }
