@@ -69,28 +69,25 @@ The recommended way to customize the background color is by using the `app:backg
         android:id="@+id/counter_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:backgroundTint="#009688"
+        app:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_add_white_24dp" />
 ```
 
-To change the badge background color you can use the `app:badgeBackgroundColor` attribute
+To change the badge style you can use these attributes:
+
+- `app:badgeBackgroundColor`
+- `app:badgeTextColor`
+- `app:badgePosition` as `RightTop`, `LeftBottom`, `LeftTop` or `RightBottom`
+
+For example:
 
 ```xml
 <com.andremion.counterfab.CounterFab
         android:id="@+id/counter_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:badgeBackgroundColor="#009688"
-        android:src="@drawable/ic_add_white_24dp" />
-```
-
-To change the badge position you can use the `app:badgePosition` attribute as: RightTop, LeftBottom, LeftTop and RightBottom.
-
-```xml
-<com.andremion.counterfab.CounterFab
-        android:id="@+id/counter_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        app:badgeBackgroundColor="@color/red"
+        app:badgeTextColor="@color/white"
         app:badgePosition="RightTop"
         android:src="@drawable/ic_add_white_24dp" />
 ```

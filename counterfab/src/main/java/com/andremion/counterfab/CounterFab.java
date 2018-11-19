@@ -105,15 +105,9 @@ public class CounterFab extends FloatingActionButton {
     public CounterFab(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs,
-                R.styleable.CounterFab,
-                0,
-                0);
-
         setUseCompatPadding(true);
 
-        final float density = getResources().getDisplayMetrics().density;
-
+        float density = getResources().getDisplayMetrics().density;
         mTextSize = TEXT_SIZE_DP * density;
         float textPadding = TEXT_PADDING_DP * density;
 
@@ -122,7 +116,6 @@ public class CounterFab extends FloatingActionButton {
 
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setStyle(Paint.Style.STROKE);
-        mTextPaint.setColor(Color.WHITE);
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTypeface(Typeface.SANS_SERIF);
@@ -130,21 +123,9 @@ public class CounterFab extends FloatingActionButton {
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCirclePaint.setStyle(Paint.Style.FILL);
 
-        int defaultBadgeColor = mCirclePaint.getColor();
+        int defaultBadgeColor = getDefaultBadgeColor();
 
-        ColorStateList colorStateList = getBackgroundTintList();
-        if (colorStateList != null) {
-            defaultBadgeColor = colorStateList.getDefaultColor();
-        } else {
-            Drawable background = getBackground();
-            if (background instanceof ColorDrawable) {
-                ColorDrawable colorDrawable = (ColorDrawable) background;
-                defaultBadgeColor = colorDrawable.getColor();
-            }
-        }
-
-        mCirclePaint.setColor(ta.getColor(R.styleable.CounterFab_badgeBackgroundColor, defaultBadgeColor));
-        badgePosition = ta.getInt(R.styleable.CounterFab_badgePosition, RIGHT_TOP_POSITION);
+        setupFromStyledAttributes(context, attrs, defaultBadgeColor);
 
         mMaskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mMaskPaint.setStyle(Paint.Style.FILL);
@@ -167,6 +148,30 @@ public class CounterFab extends FloatingActionButton {
         mContentBounds = new Rect();
 
         onCountChanged();
+    }
+
+    private int getDefaultBadgeColor() {
+        int defaultBadgeColor = mCirclePaint.getColor();
+        ColorStateList colorStateList = getBackgroundTintList();
+        if (colorStateList != null) {
+            defaultBadgeColor = colorStateList.getDefaultColor();
+        } else {
+            Drawable background = getBackground();
+            if (background instanceof ColorDrawable) {
+                ColorDrawable colorDrawable = (ColorDrawable) background;
+                defaultBadgeColor = colorDrawable.getColor();
+            }
+        }
+        return defaultBadgeColor;
+    }
+
+    private void setupFromStyledAttributes(Context context, @Nullable AttributeSet attrs, int defaultBadgeColor) {
+        TypedArray styledAttributes = context.getTheme()
+              .obtainStyledAttributes(attrs, R.styleable.CounterFab, 0, 0);
+        mTextPaint.setColor(styledAttributes.getColor(R.styleable.CounterFab_badgeTextColor, Color.WHITE));
+        mCirclePaint.setColor(styledAttributes.getColor(R.styleable.CounterFab_badgeBackgroundColor, defaultBadgeColor));
+        badgePosition = styledAttributes.getInt(R.styleable.CounterFab_badgePosition, RIGHT_TOP_POSITION);
+        styledAttributes.recycle();
     }
 
     private boolean isSizeMini() {
