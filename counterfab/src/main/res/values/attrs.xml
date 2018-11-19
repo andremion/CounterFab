@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="CounterFab">
+        <attr name="badgeTextColor" format="color" />
         <attr name="badgeBackgroundColor" format="color" />
         <attr name="badgePosition" format="enum">
             <enum name="RightTop" value="0" />

@@ -32,6 +32,7 @@ import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.IntRange;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -39,6 +40,8 @@ import android.util.Property;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
+
+import static android.support.design.widget.FloatingActionButton.*;
 
 /**
  * A {@link FloatingActionButton} subclass that shows a counter badge on right top corner.
@@ -82,7 +85,7 @@ public class CounterFab extends FloatingActionButton {
 
     private int mCount;
     private String mText;
-    private float mTextHeight;
+    private final float mTextHeight;
     private ObjectAnimator mAnimator;
 
     private int badgePosition = RIGHT_TOP_POSITION;
@@ -99,18 +102,12 @@ public class CounterFab extends FloatingActionButton {
         this(context, attrs, 0);
     }
 
-    public CounterFab(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CounterFab(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
-        TypedArray ta = context.getTheme().obtainStyledAttributes(attrs,
-                R.styleable.CounterFab,
-                0,
-                0);
 
         setUseCompatPadding(true);
 
-        final float density = getResources().getDisplayMetrics().density;
-
+        float density = getResources().getDisplayMetrics().density;
         mTextSize = TEXT_SIZE_DP * density;
         float textPadding = TEXT_PADDING_DP * density;
 
@@ -119,7 +116,6 @@ public class CounterFab extends FloatingActionButton {
 
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mTextPaint.setStyle(Paint.Style.STROKE);
-        mTextPaint.setColor(Color.WHITE);
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTypeface(Typeface.SANS_SERIF);
@@ -127,21 +123,9 @@ public class CounterFab extends FloatingActionButton {
         mCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCirclePaint.setStyle(Paint.Style.FILL);
 
-        int defaultBadgeColor = mCirclePaint.getColor();
+        int defaultBadgeColor = getDefaultBadgeColor();
 
-        ColorStateList colorStateList = getBackgroundTintList();
-        if (colorStateList != null) {
-            defaultBadgeColor = colorStateList.getDefaultColor();
-        } else {
-            Drawable background = getBackground();
-            if (background instanceof ColorDrawable) {
-                ColorDrawable colorDrawable = (ColorDrawable) background;
-                defaultBadgeColor = colorDrawable.getColor();
-            }
-        }
-
-        mCirclePaint.setColor(ta.getColor(R.styleable.CounterFab_badgeBackgroundColor, defaultBadgeColor));
-        badgePosition = ta.getInt(R.styleable.CounterFab_badgePosition, RIGHT_TOP_POSITION);
+        setupFromStyledAttributes(context, attrs, defaultBadgeColor);
 
         mMaskPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mMaskPaint.setStyle(Paint.Style.FILL);
@@ -166,8 +150,32 @@ public class CounterFab extends FloatingActionButton {
         onCountChanged();
     }
 
+    private int getDefaultBadgeColor() {
+        int defaultBadgeColor = mCirclePaint.getColor();
+        ColorStateList colorStateList = getBackgroundTintList();
+        if (colorStateList != null) {
+            defaultBadgeColor = colorStateList.getDefaultColor();
+        } else {
+            Drawable background = getBackground();
+            if (background instanceof ColorDrawable) {
+                ColorDrawable colorDrawable = (ColorDrawable) background;
+                defaultBadgeColor = colorDrawable.getColor();
+            }
+        }
+        return defaultBadgeColor;
+    }
+
+    private void setupFromStyledAttributes(Context context, @Nullable AttributeSet attrs, int defaultBadgeColor) {
+        TypedArray styledAttributes = context.getTheme()
+              .obtainStyledAttributes(attrs, R.styleable.CounterFab, 0, 0);
+        mTextPaint.setColor(styledAttributes.getColor(R.styleable.CounterFab_badgeTextColor, Color.WHITE));
+        mCirclePaint.setColor(styledAttributes.getColor(R.styleable.CounterFab_badgeBackgroundColor, defaultBadgeColor));
+        badgePosition = styledAttributes.getInt(R.styleable.CounterFab_badgePosition, RIGHT_TOP_POSITION);
+        styledAttributes.recycle();
+    }
+
     private boolean isSizeMini() {
-        return super.getSize() == android.support.design.widget.FloatingActionButton.SIZE_MINI;
+        return getSize() == SIZE_MINI;
     }
 
     /**
@@ -281,14 +289,14 @@ public class CounterFab extends FloatingActionButton {
         }
     }
 
-    private static class SavedState extends View.BaseSavedState {
+    private static final class SavedState extends View.BaseSavedState {
 
         private int count;
 
         /**
          * Constructor called from {@link CounterFab#onSaveInstanceState()}
          */
-        private SavedState(Parcelable superState) {
+        private SavedState(@Nullable Parcelable superState) {
             super(superState);
         }
 
@@ -321,9 +329,9 @@ public class CounterFab extends FloatingActionButton {
 
         @Override
         public String toString() {
-            return CounterFab.class.getSimpleName() + "." + SavedState.class.getSimpleName() + "{"
+            return CounterFab.class.getSimpleName() + '.' + SavedState.class.getSimpleName() + '{'
                     + Integer.toHexString(System.identityHashCode(this))
-                    + " count=" + count + "}";
+                    + " count=" + count + '}';
         }
 
         public static final Creator<SavedState> CREATOR = new ClassLoaderCreator<SavedState>() {
