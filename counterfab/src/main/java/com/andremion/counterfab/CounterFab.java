@@ -28,6 +28,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -40,8 +41,6 @@ import android.util.Property;
 import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
-
-import static android.support.design.widget.FloatingActionButton.*;
 
 /**
  * A {@link FloatingActionButton} subclass that shows a counter badge on right top corner.
@@ -338,7 +337,11 @@ public class CounterFab extends FloatingActionButton {
 
             @Override
             public SavedState createFromParcel(Parcel in, ClassLoader loader) {
-                return new SavedState(in, loader);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    return new SavedState(in, loader);
+                } else {
+                    return new SavedState(in);
+                }
             }
 
             @Override
