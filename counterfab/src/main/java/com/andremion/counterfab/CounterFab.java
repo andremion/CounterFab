@@ -198,6 +198,9 @@ public class CounterFab extends FloatingActionButton {
         }
     }
 
+    public void setTextSize(float newSize){
+        this.mTextSize = newSize;
+    }    
     /**
      * Increase the current count value by 1
      */
