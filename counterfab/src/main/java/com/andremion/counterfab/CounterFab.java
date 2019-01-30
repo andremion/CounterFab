@@ -114,7 +114,7 @@ public class CounterFab extends FloatingActionButton {
         mAnimationFactor = 1;
 
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setStyle(Paint.Style.STROKE);
+        mTextPaint.setStyle(Style.FILL_AND_STROKE);
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTypeface(Typeface.SANS_SERIF);
