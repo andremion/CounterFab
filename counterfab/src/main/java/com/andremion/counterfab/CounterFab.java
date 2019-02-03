@@ -99,11 +99,11 @@ public class CounterFab extends FloatingActionButton {
     private static final int RIGHT_BOTTOM_POSITION = 3;
 
     public CounterFab(Context context) {
-        this(context, null, 0);
+        this(context, null);
     }
 
     public CounterFab(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, attr.floatingActionButtonStyle);
     }
 
     public CounterFab(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
