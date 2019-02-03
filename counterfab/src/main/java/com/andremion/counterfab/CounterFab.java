@@ -109,8 +109,6 @@ public class CounterFab extends FloatingActionButton {
     public CounterFab(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        setUseCompatPadding(true);
-
         float density = getResources().getDisplayMetrics().density;
         mTextSize = TEXT_SIZE_DP * density;
         float textPadding = TEXT_PADDING_DP * density;
