@@ -17,37 +17,40 @@
 package com.andremion.counterfab;
 
 import android.animation.ObjectAnimator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.os.Build.VERSION_CODES;
-import android.os.Parcel;
+import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.IntRange;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Property;
-import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 
-import static android.support.design.widget.FloatingActionButton.*;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.stateful.ExtendableSavedState;
+
+import androidx.annotation.IntRange;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+
+import static com.google.android.material.R.attr;
 
 /**
  * A {@link FloatingActionButton} subclass that shows a counter badge on right top corner.
  */
 public class CounterFab extends FloatingActionButton {
+
+    private static final String STATE_KEY = CounterFab.class.getName() + ".STATE";
+    private static final String COUNT_STATE = "COUNT";
 
     private final Property<CounterFab, Float> ANIMATION_PROPERTY =
             new Property<CounterFab, Float>(Float.class, "animation") {
@@ -96,17 +99,15 @@ public class CounterFab extends FloatingActionButton {
     private static final int RIGHT_BOTTOM_POSITION = 3;
 
     public CounterFab(Context context) {
-        this(context, null, 0);
+        this(context, null);
     }
 
     public CounterFab(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        this(context, attrs, attr.floatingActionButtonStyle);
     }
 
     public CounterFab(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
-        setUseCompatPadding(true);
 
         float density = getResources().getDisplayMetrics().density;
         mTextSize = TEXT_SIZE_DP * density;
@@ -116,7 +117,7 @@ public class CounterFab extends FloatingActionButton {
         mAnimationFactor = 1;
 
         mTextPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTextPaint.setStyle(Paint.Style.STROKE);
+        mTextPaint.setStyle(Style.FILL_AND_STROKE);
         mTextPaint.setTextSize(mTextSize);
         mTextPaint.setTextAlign(Paint.Align.CENTER);
         mTextPaint.setTypeface(Typeface.SANS_SERIF);
@@ -290,87 +291,30 @@ public class CounterFab extends FloatingActionButton {
         }
     }
 
-    private static final class SavedState extends View.BaseSavedState {
-
-        private int count;
-
-        /**
-         * Constructor called from {@link CounterFab#onSaveInstanceState()}
-         */
-        private SavedState(@Nullable Parcelable superState) {
-            super(superState);
-        }
-
-        /**
-         * Constructor called from {@link #CREATOR}
-         */
-        private SavedState(Parcel in) {
-            super(in);
-            readState(in);
-        }
-
-        /**
-         * Constructor called from {@link #CREATOR}
-         */
-        @TargetApi(VERSION_CODES.N)
-        private SavedState(Parcel in, ClassLoader loader) {
-            super(in, loader);
-            readState(in);
-        }
-
-        private void readState(Parcel in) {
-            count = in.readInt();
-        }
-
-        @Override
-        public void writeToParcel(Parcel out, int flags) {
-            super.writeToParcel(out, flags);
-            out.writeInt(count);
-        }
-
-        @Override
-        public String toString() {
-            return CounterFab.class.getSimpleName() + '.' + SavedState.class.getSimpleName() + '{'
-                    + Integer.toHexString(System.identityHashCode(this))
-                    + " count=" + count + '}';
-        }
-
-        public static final Creator<SavedState> CREATOR = new ClassLoaderCreator<SavedState>() {
-
-            @Override
-            public SavedState createFromParcel(Parcel in, ClassLoader loader) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    return new SavedState(in, loader);
-                } else {
-                    return new SavedState(in);
-                }
-            }
-
-            @Override
-            public SavedState createFromParcel(Parcel in) {
-                return new SavedState(in);
-            }
-
-            @Override
-            public SavedState[] newArray(int size) {
-                return new SavedState[size];
-            }
-        };
-    }
-
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
-        SavedState ss = new SavedState(superState);
-        ss.count = mCount;
-        return ss;
+        ExtendableSavedState state = new ExtendableSavedState(superState);
+
+        Bundle bundle = new Bundle();
+        bundle.putInt(COUNT_STATE, mCount);
+        state.extendableStates.put(STATE_KEY, bundle);
+
+        return state;
     }
 
     @Override
     public void onRestoreInstanceState(Parcelable state) {
-        SavedState ss = (SavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
-        setCount(ss.count);
+        if (!(state instanceof ExtendableSavedState)) {
+            super.onRestoreInstanceState(state);
+            return;
+        }
+
+        ExtendableSavedState extendableState = (ExtendableSavedState) state;
+        super.onRestoreInstanceState(extendableState.getSuperState());
+
+        Bundle bundle = extendableState.extendableStates.get(STATE_KEY);
+        setCount(bundle.getInt(COUNT_STATE));
         requestLayout();
     }
 

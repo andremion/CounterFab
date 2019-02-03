@@ -1,0 +1,5 @@
+<resources>
+    <!--We can't use FloatingActionButton#setUseCompatPadding due an issue in Lollipop.-->
+    <!--Use this margin only for API 21+-->
+    <dimen name="fab_margin">16dp</dimen>
+</resources>
