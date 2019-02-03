@@ -22,17 +22,17 @@ allprojects {
     }
     project.ext {
 
-        compileSdkVersion = 27
+        compileSdkVersion = 28
         minSdkVersion = 16
-        targetSdkVersion = 27
+        targetSdkVersion = 28
 
         versionCode = 6
         versionName = "1.2.0"
 
-        supportLibraryVersion = '27.1.1'
+        materialVersion = '1.0.0'
 
         junitVersion = '4.12'
-        espressoVersion = '2.2.+'
+        espressoCoreVersion = '3.1.1'
 
         name = 'CounterFab'
         description = 'A FloatingActionButton subclass that shows a counter badge on right top corner'

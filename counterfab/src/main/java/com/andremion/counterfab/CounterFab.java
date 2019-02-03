@@ -42,6 +42,15 @@ import android.view.View;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.stateful.ExtendableSavedState;
+
+import androidx.annotation.IntRange;
+import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
+
+import static com.google.android.material.R.attr;
+
 /**
  * A {@link FloatingActionButton} subclass that shows a counter badge on right top corner.
  */

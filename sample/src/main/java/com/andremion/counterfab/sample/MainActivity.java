@@ -17,8 +17,8 @@
 package com.andremion.counterfab.sample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.widget.RadioGroup;
 
@@ -33,10 +33,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mCounterMode = (RadioGroup) findViewById(R.id.counter_mode);
+        mCounterMode = findViewById(R.id.counter_mode);
         mCounterMode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mCounterFab = (CounterFab) findViewById(R.id.fab);
+        mCounterFab = findViewById(R.id.fab);
         mCounterFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
