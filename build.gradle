@@ -2,12 +2,13 @@
 
 buildscript {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        classpath 'com.karumi:shot:2.2.0'
     }
 }
 
@@ -17,11 +18,12 @@ plugins {
 
 allprojects {
     repositories {
-        jcenter()
         google()
+        jcenter()
     }
     project.ext {
 
+        applicationId = "com.andremion.counterfab.sample"
         compileSdkVersion = 28
         minSdkVersion = 16
         targetSdkVersion = 28
@@ -33,6 +35,8 @@ allprojects {
 
         junitVersion = '4.12'
         espressoCoreVersion = '3.1.1'
+        rulesVersion = '1.1.1'
+        screenshotTestingVersion = '0.8.0'
 
         name = 'CounterFab'
         description = 'A FloatingActionButton subclass that shows a counter badge on right top corner'

@@ -1,14 +1,15 @@
 apply plugin: 'com.android.application'
+apply plugin: 'shot'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.andremion.counterfab.sample"
+        applicationId project.ext.applicationId
         minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode project.ext.versionCode
         versionName project.ext.versionName
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "${project.ext.applicationId}.runner.ScreenshotTestRunner"
     }
     buildTypes {
         release {
@@ -16,6 +17,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+shot {
+    appId = project.ext.applicationId
 }
 
 dependencies {
@@ -26,4 +31,9 @@ dependencies {
     testImplementation "junit:junit:$junitVersion"
 
     androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+    androidTestImplementation "androidx.test:rules:$rulesVersion"
+    androidTestImplementation dependencies.create("com.facebook.testing.screenshot:core:$screenshotTestingVersion") {
+        exclude group: 'com.crittercism.dexmaker', module: 'dexmaker'
+        exclude group: 'com.crittercism.dexmaker', module: 'dexmaker-dx'
+    }
 }
