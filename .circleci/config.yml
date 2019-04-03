@@ -125,8 +125,8 @@ jobs:
     - run:
         name: Authenticate with Google Cloud
         command: >-
-        gcloud auth activate-service-account firebase-adminsdk-9bs94@counterfab-b6643.iam.gserviceaccount.com
-        --key-file ${HOME}/client-secret.json
+          gcloud auth activate-service-account firebase-adminsdk-9bs94@counterfab-b6643.iam.gserviceaccount.com
+          --key-file ${HOME}/client-secret.json
     - run:
         name: Run instrumented test on Firebase Test Lab
         command: >-
