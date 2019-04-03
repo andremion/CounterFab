@@ -153,26 +153,26 @@ jobs:
 
   report_screenshot_tests:
     <<: *android_config
-      steps:
-      - checkout
-      - *restore_cache
-      - run:
-          name: Download dependencies
-          command: ./gradlew androidDependencies
-      - *attach_debug_workspace
-      - *attach_firebase_workspace
-      - run:
-          name: Move Firebase screenshot resources
-          command: >-
-            mkdir -p sample/screenshots &&
-            cp firebase/walleye-28-en_US-portrait/artifacts/sdcard/screenshots/com.andremion.counterfab.sample.test/*
-            sample/screenshots/
-      - run:
-          name: Generate JaCoCo report
-          command: ./gradlew executeScreenshotTests
-      - store_artifacts:
-          path: sample/build/reports/shot/verification/
-          destination: /reports/screenshots/
+    steps:
+    - checkout
+    - *restore_cache
+    - run:
+        name: Download dependencies
+        command: ./gradlew androidDependencies
+    - *attach_debug_workspace
+    - *attach_firebase_workspace
+    - run:
+        name: Move Firebase screenshot resources
+        command: >-
+          mkdir -p sample/screenshots &&
+          cp firebase/walleye-28-en_US-portrait/artifacts/sdcard/screenshots/com.andremion.counterfab.sample.test/*
+          sample/screenshots/
+    - run:
+        name: Generate JaCoCo report
+        command: ./gradlew executeScreenshotTests
+    - store_artifacts:
+        path: sample/build/reports/shot/verification/
+        destination: /reports/screenshots/
 
 workflows:
   version: 2
