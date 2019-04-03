@@ -130,14 +130,14 @@ jobs:
     - run:
         name: Run instrumented test on Firebase Test Lab
         command: >-
-        gcloud firebase test android run --no-auto-google-login
-        --type instrumentation
-        --app sample/build/outputs/apk/debug/sample-debug.apk
-        --test sample/build/outputs/apk/androidTest/debug/sample-debug-androidTest.apk
-        --device model=walleye,version=28,locale=en_US,orientation=portrait
-        --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec
-        --directories-to-pull=/sdcard
-        --timeout 20m
+          gcloud firebase test android run --no-auto-google-login
+          --type instrumentation
+          --app sample/build/outputs/apk/debug/sample-debug.apk
+          --test sample/build/outputs/apk/androidTest/debug/sample-debug-androidTest.apk
+          --device model=walleye,version=28,locale=en_US,orientation=portrait
+          --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec
+          --directories-to-pull=/sdcard
+          --timeout 20m
     - run:
         name: Create directory to store test results
         command: mkdir firebase
@@ -164,9 +164,9 @@ jobs:
       - run:
           name: Move Firebase screenshot resources
           command: >-
-          mkdir -p sample/screenshots &&
-          cp firebase/walleye-28-en_US-portrait/artifacts/sdcard/screenshots/com.andremion.counterfab.sample.test/*
-          sample/screenshots/
+            mkdir -p sample/screenshots &&
+            cp firebase/walleye-28-en_US-portrait/artifacts/sdcard/screenshots/com.andremion.counterfab.sample.test/*
+            sample/screenshots/
       - run:
           name: Generate JaCoCo report
           command: ./gradlew executeScreenshotTests
