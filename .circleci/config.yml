@@ -30,7 +30,6 @@ references:
       - sample/build/outputs/androidTest-results
       - sample/build/outputs/apk
       - sample/build/outputs/code-coverage
-      - sample/build/test-results
   attach_firebase_workspace: &attach_firebase_workspace
     attach_workspace:
       at: *workspace
@@ -88,28 +87,6 @@ jobs:
     - store_artifacts:
         path: sample/build/outputs/apk/
         destination: /apk/
-
-  ## Run unit tests
-
-  test_unit:
-    <<: *android_config
-    steps:
-    - checkout
-    - *restore_cache
-    - run:
-        name: Download dependencies
-        command: ./gradlew androidDependencies
-    - *save_cache
-    - run:
-        name: Run unit tests
-        command: ./gradlew testDebugUnitTest
-    - *persist_debug_workspace
-    - store_artifacts:
-        path: sample/build/reports/
-        destination: /sample/reports/
-    - store_test_results:
-        path: sample/build/test-results/
-        destination: /sample/test-results/
 
   ## Run instrumented tests
 
@@ -179,7 +156,6 @@ workflows:
   workflow:
     jobs:
     - build_debug
-    - test_unit
     - test_instrumented:
         requires:
         - build_debug
