@@ -86,7 +86,7 @@ jobs:
     - *persist_debug_workspace
     - store_artifacts:
         path: sample/build/outputs/apk/
-        destination: /apk/
+        destination: apk
 
   ## Run instrumented tests
 
@@ -101,9 +101,7 @@ jobs:
         command: gcloud config set project counterfab-b6643
     - run:
         name: Authenticate with Google Cloud
-        command: >-
-          gcloud auth activate-service-account firebase-adminsdk-9bs94@counterfab-b6643.iam.gserviceaccount.com
-          --key-file ${HOME}/client-secret.json
+        command: gcloud auth activate-service-account --key-file ${HOME}/client-secret.json
     - run:
         name: Run instrumented test on Firebase Test Lab
         command: >-
@@ -124,7 +122,7 @@ jobs:
     - *persist_firebase_workspace
     - store_artifacts:
         path: firebase/
-        destination: /firebase/
+        destination: instrumentation
 
   ## Submit screenshot tests
 
@@ -145,11 +143,11 @@ jobs:
           cp -r firebase/walleye-28-en_US-portrait/artifacts/sdcard/screenshots/com.andremion.counterfab.sample.test/*
           sample/screenshots/
     - run:
-        name: Generate JaCoCo report
+        name: Generate Screenshot test report
         command: ./gradlew executeScreenshotTests
     - store_artifacts:
         path: sample/build/reports/shot/verification/
-        destination: /reports/screenshots/
+        destination: reports
 
 workflows:
   version: 2
