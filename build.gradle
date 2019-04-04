@@ -57,6 +57,10 @@ allprojects {
         developerId = 'andremion'
         developerName = 'André Mion'
         developerEmail = 'andremion@gmail.com'
+
+        ciBuild = System.getenv("CI") == "true"
+        // allows for -DpreDex=false to be set
+        preDexEnabled = System.getProperty("preDex", "true") == "true"
     }
 }
 

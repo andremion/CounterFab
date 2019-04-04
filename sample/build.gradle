@@ -11,6 +11,13 @@ android {
         versionName project.ext.versionName
         testInstrumentationRunner "${project.ext.applicationId}.runner.ScreenshotTestRunner"
     }
+    aaptOptions {
+        cruncherEnabled !project.ext.ciBuild
+    }
+    dexOptions {
+        // Skip pre-dexing when running on CI or when disabled via -DpreDex=false.
+        preDexLibraries !project.ext.ciBuild && project.ext.preDexEnabled
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -21,6 +28,7 @@ android {
 
 shot {
     appId = project.ext.applicationId
+    runInstrumentation = false
 }
 
 dependencies {
