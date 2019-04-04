@@ -165,7 +165,7 @@ jobs:
         name: Move Firebase screenshot resources
         command: >-
           mkdir -p sample/screenshots &&
-          cp firebase/walleye-28-en_US-portrait/artifacts/sdcard/screenshots/com.andremion.counterfab.sample.test/*
+          cp -r firebase/walleye-28-en_US-portrait/artifacts/sdcard/screenshots/com.andremion.counterfab.sample.test/*
           sample/screenshots/
     - run:
         name: Generate JaCoCo report
