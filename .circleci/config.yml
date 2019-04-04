@@ -123,6 +123,8 @@ jobs:
     - store_artifacts:
         path: firebase/
         destination: instrumentation
+    - store_test_results:
+        path: firebase/
 
   ## Submit screenshot tests
 
