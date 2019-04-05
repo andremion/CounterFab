@@ -294,13 +294,13 @@ public class CounterFab extends FloatingActionButton {
     @Override
     public Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
-        ExtendableSavedState state = new ExtendableSavedState(superState);
-
-        Bundle bundle = new Bundle();
-        bundle.putInt(COUNT_STATE, mCount);
-        state.extendableStates.put(STATE_KEY, bundle);
-
-        return state;
+        if (superState instanceof ExtendableSavedState) {
+            ExtendableSavedState state = (ExtendableSavedState) superState;
+            Bundle bundle = new Bundle();
+            bundle.putInt(COUNT_STATE, mCount);
+            state.extendableStates.put(STATE_KEY, bundle);
+        }
+        return superState;
     }
 
     @Override
@@ -311,11 +311,10 @@ public class CounterFab extends FloatingActionButton {
         }
 
         ExtendableSavedState extendableState = (ExtendableSavedState) state;
-        super.onRestoreInstanceState(extendableState.getSuperState());
+        super.onRestoreInstanceState(extendableState);
 
         Bundle bundle = extendableState.extendableStates.get(STATE_KEY);
         setCount(bundle.getInt(COUNT_STATE));
         requestLayout();
     }
-
 }
