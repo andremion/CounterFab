@@ -1,22 +1,23 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'shot'
 
+def deps = rootProject.extensions.ext
+
 android {
-    compileSdkVersion project.ext.compileSdkVersion
+    compileSdkVersion deps.android.compileSdkVersion
     defaultConfig {
-        applicationId project.ext.applicationId
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
-        versionCode project.ext.versionCode
-        versionName project.ext.versionName
-        testInstrumentationRunner "${project.ext.applicationId}.runner.ScreenshotTestRunner"
-    }
-    aaptOptions {
-        cruncherEnabled !project.ext.ciBuild
+        applicationId deps.application.id
+        minSdkVersion deps.android.minSdkVersion
+        targetSdkVersion deps.android.targetSdkVersion
+        versionCode deps.application.versionCode
+        versionName deps.application.versionName
+        testInstrumentationRunner "${deps.application.id}.helpers.ScreenshotTestRunner"
     }
     dexOptions {
         // Skip pre-dexing when running on CI or when disabled via -DpreDex=false.
-        preDexLibraries !project.ext.ciBuild && project.ext.preDexEnabled
+        preDexLibraries !deps.building.runningOnCI && deps.building.preDexEnabled
     }
     buildTypes {
         release {
@@ -27,20 +28,21 @@ android {
 }
 
 shot {
-    appId = project.ext.applicationId
+    appId = deps.application.id
     runInstrumentation = false
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':counterfab')
-    implementation "com.google.android.material:material:$materialVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$compiling.kotlinVersion"
+    implementation "com.google.android.material:material:$ui.materialVersion"
 
-    testImplementation "junit:junit:$junitVersion"
+    testImplementation "junit:junit:$testing.junitVersion"
 
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
-    androidTestImplementation "androidx.test:rules:$rulesVersion"
-    androidTestImplementation dependencies.create("com.facebook.testing.screenshot:core:$screenshotTestingVersion") {
+    androidTestImplementation "androidx.test.espresso:espresso-core:$testing.espressoCoreVersion"
+    androidTestImplementation "androidx.test:rules:$testing.rulesVersion"
+    androidTestImplementation dependencies.create("com.facebook.testing.screenshot:core:$testing.screenshotTestingVersion") {
         exclude group: 'com.crittercism.dexmaker', module: 'dexmaker'
         exclude group: 'com.crittercism.dexmaker', module: 'dexmaker-dx'
     }
