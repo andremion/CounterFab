@@ -96,18 +96,7 @@ class CounterFab @JvmOverloads constructor(
         textPaint.getTextBounds(maxCountText, 0, maxCountText.length, textBounds)
         textBounds
     }
-
-    private val circleBounds: Rect = run {
-        val circleRadius = Math.max(textBounds.width(), textBounds.height()) / 2f + textPadding
-        val circleEnd = (circleRadius * 2).toInt()
-        if (isSizeMini) {
-            val circleStart = (circleRadius / 2).toInt()
-            Rect(circleStart, circleStart, circleEnd, circleEnd)
-        } else {
-            val circleStart = 0
-            Rect(circleStart, circleStart, (circleRadius * 2).toInt(), (circleRadius * 2).toInt())
-        }
-    }
+    private val circleBounds = Rect()
     private val contentBounds = Rect()
 
     private val animationDuration = resources.getInteger(android.R.integer.config_shortAnimTime)
@@ -146,6 +135,17 @@ class CounterFab @JvmOverloads constructor(
         updateCountText()
     }
 
+    private fun updateCountText() {
+        countText = if (isSizeMini) when {
+            count > MINI_MAX_COUNT -> MINI_MAX_COUNT_TEXT
+            else -> count.toString()
+        }
+        else when {
+            count > NORMAL_MAX_COUNT -> NORMAL_MAX_COUNT_TEXT
+            else -> count.toString()
+        }
+    }
+
     private fun getDefaultBadgeColor(): Int = run {
         val colorStateList = backgroundTintList
         if (colorStateList != null) {
@@ -157,17 +157,6 @@ class CounterFab @JvmOverloads constructor(
             } else {
                 circlePaint.color
             }
-        }
-    }
-
-    private fun updateCountText() {
-        countText = if (isSizeMini) when {
-            count > MINI_MAX_COUNT -> MINI_MAX_COUNT_TEXT
-            else -> count.toString()
-        }
-        else when {
-            count > NORMAL_MAX_COUNT -> NORMAL_MAX_COUNT_TEXT
-            else -> count.toString()
         }
     }
 
@@ -201,6 +190,23 @@ class CounterFab @JvmOverloads constructor(
             interpolator = ANIMATION_INTERPOLATOR
             duration = animationDuration.toLong()
             start()
+        }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        calculateCircleBounds()
+    }
+
+    private fun calculateCircleBounds() {
+        val circleRadius = Math.max(textBounds.width(), textBounds.height()) / 2f + textPadding
+        val circleEnd = (circleRadius * 2).toInt()
+        if (isSizeMini) {
+            val circleStart = (circleRadius / 2).toInt()
+            circleBounds.set(circleStart, circleStart, circleEnd, circleEnd)
+        } else {
+            val circleStart = 0
+            circleBounds.set(circleStart, circleStart, (circleRadius * 2).toInt(), (circleRadius * 2).toInt())
         }
     }
 
