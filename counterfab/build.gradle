@@ -1,15 +1,19 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
+def deps = rootProject.extensions.ext
+
 android {
-    compileSdkVersion project.ext.compileSdkVersion
+    compileSdkVersion deps.android.compileSdkVersion
     defaultConfig {
-        minSdkVersion project.ext.minSdkVersion
-        targetSdkVersion project.ext.targetSdkVersion
-        versionCode project.ext.versionCode
-        versionName project.ext.versionName
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion deps.android.minSdkVersion
+        targetSdkVersion deps.android.targetSdkVersion
+        versionCode deps.versionCode
+        versionName deps.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -21,11 +25,14 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.google.android.material:material:$materialVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$compiling.kotlinVersion"
+    implementation "com.google.android.material:material:$ui.materialVersion"
+    implementation "androidx.appcompat:appcompat:$aux.appCompatVersion"
+    implementation "androidx.core:core-ktx:$aux.ktxCoreVersion"
 
-    testImplementation "junit:junit:$junitVersion"
+    testImplementation "junit:junit:$testing.junitVersion"
 
-    androidTestImplementation "androidx.test.espresso:espresso-core:$espressoCoreVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$testing.espressoCoreVersion"
 }
 
 //apply from: 'https://raw.githubusercontent.com/andremion/JCenter/master/deploy.gradle'

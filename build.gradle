@@ -1,14 +1,14 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        apply from: 'configuration/properties.gradle'
+        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${compiling.kotlinVersion}"
         classpath 'com.karumi:shot:2.2.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
 
@@ -23,20 +23,8 @@ allprojects {
     }
     project.ext {
 
-        applicationId = "com.andremion.counterfab.sample"
-        compileSdkVersion = 28
-        minSdkVersion = 16
-        targetSdkVersion = 28
-
-        versionCode = 7
-        versionName = "1.2.1"
-
-        materialVersion = '1.0.0'
-
-        junitVersion = '4.12'
-        espressoCoreVersion = '3.1.1'
-        rulesVersion = '1.1.1'
-        screenshotTestingVersion = '0.8.0'
+        versionCode = 8
+        versionName = '1.2.2-alpha1'
 
         name = 'CounterFab'
         description = 'A FloatingActionButton subclass that shows a counter badge on right top corner'
@@ -44,7 +32,7 @@ allprojects {
 
         licenseName = 'The Apache Software License, Version 2.0'
         licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-        allLicenses = ["Apache-2.0"]
+        allLicenses = ['Apache-2.0']
 
         bintrayRepo = 'github'
         group = 'com.github.andremion'
@@ -57,10 +45,6 @@ allprojects {
         developerId = 'andremion'
         developerName = 'André Mion'
         developerEmail = 'andremion@gmail.com'
-
-        ciBuild = System.getenv("CI") == "true"
-        // allows for -DpreDex=false to be set
-        preDexEnabled = System.getProperty("preDex", "true") == "true"
     }
 }
 
