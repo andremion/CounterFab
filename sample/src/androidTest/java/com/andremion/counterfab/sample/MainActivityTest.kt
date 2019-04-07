@@ -50,21 +50,10 @@ class MainActivityTest {
     }
 
     @Test
-    fun shouldRenderSizeMiniProperlyAfterOrientationChanged() {
-        onView(withId(R.id.fab)).perform(setFabSize(FloatingActionButton.SIZE_MINI))
-
-        testRule.activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
-
-        Screenshot.snapActivity(testRule.activity).record()
-    }
-
-    @Test
-    fun shouldKeepSizeMiniStateAfterOrientationChanged() {
-        onView(withId(R.id.fab)).perform(click(), click())
-
-        testRule.activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        InstrumentationRegistry.getInstrumentation().waitForIdleSync()
+    fun shouldRenderSizeMiniWithCountProperly() {
+        onView(withId(R.id.fab)).perform(
+                setFabSize(FloatingActionButton.SIZE_MINI), click(), click()
+        )
 
         Screenshot.snapActivity(testRule.activity).record()
     }
