@@ -11,8 +11,8 @@ android {
         applicationId deps.application.id
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode deps.application.versionCode
-        versionName deps.application.versionName
+        versionCode deps.versionCode
+        versionName deps.versionName
         testInstrumentationRunner "${deps.application.id}.helpers.ScreenshotTestRunner"
     }
     dexOptions {
@@ -37,6 +37,7 @@ dependencies {
     implementation project(':counterfab')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$compiling.kotlinVersion"
     implementation "com.google.android.material:material:$ui.materialVersion"
+    implementation "androidx.appcompat:appcompat:$aux.appCompatVersion"
 
     testImplementation "junit:junit:$testing.junitVersion"
 

@@ -11,8 +11,8 @@ android {
     defaultConfig {
         minSdkVersion deps.android.minSdkVersion
         targetSdkVersion deps.android.targetSdkVersion
-        versionCode deps.android.versionCode
-        versionName deps.android.versionName
+        versionCode deps.versionCode
+        versionName deps.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -27,6 +27,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$compiling.kotlinVersion"
     implementation "com.google.android.material:material:$ui.materialVersion"
+    implementation "androidx.appcompat:appcompat:$aux.appCompatVersion"
     implementation "androidx.core:core-ktx:$aux.ktxCoreVersion"
 
     testImplementation "junit:junit:$testing.junitVersion"

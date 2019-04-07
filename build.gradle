@@ -1,16 +1,14 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     repositories {
         google()
         jcenter()
     }
     dependencies {
-        apply from: 'configuration/dependencies.gradle'
+        apply from: 'configuration/properties.gradle'
         classpath 'com.android.tools.build:gradle:3.3.2'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$compiling.kotlinVersion"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${compiling.kotlinVersion}"
         classpath 'com.karumi:shot:2.2.0'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.0'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     }
 }
 
@@ -22,6 +20,31 @@ allprojects {
     repositories {
         google()
         jcenter()
+    }
+    project.ext {
+
+        versionCode = 8
+        versionName = '1.2.2-alpha1'
+
+        name = 'CounterFab'
+        description = 'A FloatingActionButton subclass that shows a counter badge on right top corner'
+        url = 'https://play.google.com/store/apps/details?id=com.andremion.counterfab.sample'
+
+        licenseName = 'The Apache Software License, Version 2.0'
+        licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+        allLicenses = ['Apache-2.0']
+
+        bintrayRepo = 'github'
+        group = 'com.github.andremion'
+        artifact = 'counterfab'
+
+        gitUrl = 'https://github.com/andremion/' + name
+        vcsUrl = gitUrl + '.git'
+        issueTracker = gitUrl + '/issues'
+
+        developerId = 'andremion'
+        developerName = 'André Mion'
+        developerEmail = 'andremion@gmail.com'
     }
 }
 
