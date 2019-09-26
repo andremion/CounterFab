@@ -30,6 +30,7 @@ import android.util.AttributeSet
 import android.util.Property
 import android.view.animation.OvershootInterpolator
 import androidx.annotation.IntRange
+import androidx.core.graphics.ColorUtils
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -79,10 +80,6 @@ class CounterFab @JvmOverloads constructor(
 
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
-    }
-    private val maskPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL
-        color = MASK_COLOR
     }
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Style.FILL_AND_STROKE
@@ -158,7 +155,9 @@ class CounterFab @JvmOverloads constructor(
                 circlePaint.color
             }
         }
-    }
+    }.applyColorMask()
+
+    private fun Int.applyColorMask() = ColorUtils.compositeColors(MASK_COLOR, this)
 
     /**
      * Increase the current count value by 1
@@ -245,8 +244,6 @@ class CounterFab @JvmOverloads constructor(
             val radius = circleBounds.width() / 2f * animationFactor
             // Solid circle
             canvas.drawCircle(cx, cy, radius, circlePaint)
-            // Mask circle
-            canvas.drawCircle(cx, cy, radius, maskPaint)
             // Count text
             textPaint.textSize = textSize * animationFactor
             canvas.drawText(countText, cx, cy + textBounds.height() / 2f, textPaint)
