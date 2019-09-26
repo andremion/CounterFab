@@ -35,6 +35,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.stateful.ExtendableSavedState
+import kotlin.math.max
 
 private val STATE_KEY = CounterFab::class.java.name + ".STATE"
 private const val COUNT_STATE = "COUNT"
@@ -79,7 +80,7 @@ class CounterFab @JvmOverloads constructor(
     private val textPadding = TEXT_PADDING_DP * resources.displayMetrics.density
 
     private val circlePaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL
+        style = Style.FILL
     }
     private val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Style.FILL_AND_STROKE
@@ -198,7 +199,7 @@ class CounterFab @JvmOverloads constructor(
     }
 
     private fun calculateCircleBounds() {
-        val circleRadius = Math.max(textBounds.width(), textBounds.height()) / 2f + textPadding
+        val circleRadius = max(textBounds.width(), textBounds.height()) / 2f + textPadding
         val circleEnd = (circleRadius * 2).toInt()
         if (isSizeMini) {
             val circleStart = (circleRadius / 2).toInt()
