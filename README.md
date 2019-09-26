@@ -1,6 +1,7 @@
 [![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=true)](http://www.apache.org/licenses/LICENSE-2.0)
 ![minSdkVersion 16](https://img.shields.io/badge/minSdkVersion-16-red.svg?style=true)
 ![compileSdkVersion 24](https://img.shields.io/badge/compileSdkVersion-24-yellow.svg?style=true)
+[![CircleCI](https://circleci.com/gh/andremion/CounterFab.svg?style=svg)](https://circleci.com/gh/andremion/CounterFab)
 [![Download](https://api.bintray.com/packages/andremion/github/CounterFab/images/download.svg)](https://bintray.com/andremion/github/CounterFab/_latestVersion)
 
 [![Android Arsenal CounterFab](https://img.shields.io/badge/Android%20Arsenal-CounterFab-green.svg?style=true)](https://android-arsenal.com/details/1/5052)

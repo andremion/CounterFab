@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.andremion.counterfab.sample">
+<manifest package="com.andremion.counterfab.sample"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:sharedUserId="com.andremion.counterfab.sample.uid">
 
     <application
         android:allowBackup="true"

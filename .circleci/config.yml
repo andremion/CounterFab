@@ -1,0 +1,164 @@
+version: 2
+
+references:
+
+  ## Cache
+
+  cache_key: &cache_key
+    key: cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}-{{ checksum "build.gradle" }}-{{ checksum "counterfab/build.gradle" }}-{{ checksum "sample/build.gradle" }}
+  restore_cache: &restore_cache
+    restore_cache:
+      <<: *cache_key
+  save_cache: &save_cache
+    save_cache:
+      <<: *cache_key
+      paths:
+      - ~/.gradle
+      - ~/.m2
+
+  ## Workspace
+
+  workspace: &workspace
+               ~/workspace
+  attach_debug_workspace: &attach_debug_workspace
+    attach_workspace:
+      at: *workspace
+  persist_debug_workspace: &persist_debug_workspace
+    persist_to_workspace:
+      root: *workspace
+      paths:
+      - sample/build/outputs/androidTest-results
+      - sample/build/outputs/apk
+      - sample/build/outputs/code-coverage
+  attach_firebase_workspace: &attach_firebase_workspace
+    attach_workspace:
+      at: *workspace
+  persist_firebase_workspace: &persist_firebase_workspace
+    persist_to_workspace:
+      root: *workspace
+      paths:
+      - firebase
+
+  ## Docker image configurations
+
+  android_config: &android_config
+    working_directory: *workspace
+    docker:
+    - image: circleci/android:api-28-alpha
+    environment:
+      TERM: dumb
+      _JAVA_OPTIONS: "-Xmx2048m -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m"'
+  gcloud_config: &gcloud_config
+    working_directory: *workspace
+    docker:
+    - image: google/cloud-sdk:latest
+    environment:
+      TERM: dumb
+
+  # Google Cloud Service
+
+  export_gcloud_key: &export_gcloud_key
+    run:
+      name: Export Google Cloud Service key environment variable
+      command: echo 'export GCLOUD_SERVICE_KEY="$GCLOUD_SERVICE_KEY"' >> $BASH_ENV
+  decode_gcloud_key: &decode_gcloud_key
+    run:
+      name: Decode Google Cloud credentials
+      command: echo $GCLOUD_SERVICE_KEY | base64 -di > ${HOME}/client-secret.json
+
+jobs:
+
+  ## Build debug APK and instrumented test APK
+
+  build_debug:
+    <<: *android_config
+    steps:
+    - checkout
+    - *restore_cache
+    - run:
+        name: Download dependencies
+        command: ./gradlew androidDependencies
+    - *save_cache
+    - run:
+        name: Gradle build (debug)
+        command: ./gradlew assembleDebug assembleAndroidTest
+    - *persist_debug_workspace
+    - store_artifacts:
+        path: sample/build/outputs/apk/
+        destination: apk
+
+  ## Run instrumented tests
+
+  test_instrumented:
+    <<: *gcloud_config
+    steps:
+    - *attach_debug_workspace
+    - *export_gcloud_key
+    - *decode_gcloud_key
+    - run:
+        name: Set Google Cloud target project
+        command: gcloud config set project counterfab-b6643
+    - run:
+        name: Authenticate with Google Cloud
+        command: gcloud auth activate-service-account --key-file ${HOME}/client-secret.json
+    - run:
+        name: Run instrumented test on Firebase Test Lab
+        command: >-
+          gcloud firebase test android run --no-auto-google-login
+          --type instrumentation
+          --app sample/build/outputs/apk/debug/sample-debug.apk
+          --test sample/build/outputs/apk/androidTest/debug/sample-debug-androidTest.apk
+          --device model=walleye,version=28,locale=en_US,orientation=portrait
+          --environment-variables coverage=true,coverageFile=/sdcard/coverage.ec
+          --directories-to-pull=/sdcard
+          --timeout 20m
+    - run:
+        name: Create directory to store test results
+        command: mkdir firebase
+    - run:
+        name: Download instrumented test results from Firebase Test Lab
+        command: gsutil -m cp -r -U "`gsutil ls gs://test-lab-734qaq4mq93km-wb8y9z8s6fud2 | tail -1`*" /root/workspace/firebase/
+    - *persist_firebase_workspace
+    - store_artifacts:
+        path: firebase/
+        destination: instrumentation
+    - store_test_results:
+        path: firebase/
+
+  ## Submit screenshot tests
+
+  report_screenshot_tests:
+    <<: *android_config
+    steps:
+    - checkout
+    - *restore_cache
+    - run:
+        name: Download dependencies
+        command: ./gradlew androidDependencies
+    - *attach_debug_workspace
+    - *attach_firebase_workspace
+    - run:
+        name: Move Firebase screenshot resources
+        command: >-
+          mkdir -p sample/screenshots &&
+          cp -r firebase/walleye-28-en_US-portrait/artifacts/sdcard/screenshots/com.andremion.counterfab.sample.test/*
+          sample/screenshots/
+    - run:
+        name: Generate Screenshot test report
+        command: ./gradlew executeScreenshotTests
+    - store_artifacts:
+        path: sample/build/reports/shot/verification/
+        destination: reports
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build_debug
+    - test_instrumented:
+        requires:
+        - build_debug
+    - report_screenshot_tests:
+        requires:
+        - test_instrumented
