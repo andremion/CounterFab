@@ -23,8 +23,8 @@ allprojects {
     }
     project.ext {
 
-        versionCode = 8
-        versionName = '1.2.2-alpha1'
+        versionCode = 9
+        versionName = '1.2.2'
 
         name = 'CounterFab'
         description = 'A FloatingActionButton subclass that shows a counter badge on right top corner'
