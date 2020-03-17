@@ -58,7 +58,7 @@ private const val RIGHT_BOTTOM_POSITION = 3
 /**
  * A [FloatingActionButton] subclass that shows a counter badge on right top corner.
  */
-class CounterFab @JvmOverloads constructor(
+open class CounterFab @JvmOverloads constructor(
         context: Context,
         attrs: AttributeSet? = null,
         defStyleAttr: Int = R.attr.floatingActionButtonStyle
