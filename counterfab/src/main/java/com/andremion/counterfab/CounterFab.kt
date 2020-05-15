@@ -103,7 +103,7 @@ open class CounterFab @JvmOverloads constructor(
     private val isAnimating: Boolean
         get() = animator.isRunning
     private val isSizeMini: Boolean
-        get() = !forceLargeBadge || size == SIZE_MINI
+        get() = !forceLargeBadge && size == SIZE_MINI
     private val badgePosition: Int
     private var countText: String = ""
 
