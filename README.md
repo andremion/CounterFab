@@ -2,7 +2,6 @@
 ![minSdkVersion 16](https://img.shields.io/badge/minSdkVersion-16-red.svg?style=true)
 ![compileSdkVersion 24](https://img.shields.io/badge/compileSdkVersion-24-yellow.svg?style=true)
 [![CircleCI](https://circleci.com/gh/andremion/CounterFab.svg?style=svg)](https://circleci.com/gh/andremion/CounterFab)
-[![Download](https://api.bintray.com/packages/andremion/github/CounterFab/images/download.svg)](https://bintray.com/andremion/github/CounterFab/_latestVersion)
 [![maven-central](https://img.shields.io/maven-central/v/com.github.andremion/counterfab.svg)](https://search.maven.org/#artifactdetails%7Ccom.github.andremion%7Ccounterfab%7C1.2.2%7Caar)
 
 [![Android Arsenal CounterFab](https://img.shields.io/badge/Android%20Arsenal-CounterFab-green.svg?style=true)](https://android-arsenal.com/details/1/5052)
